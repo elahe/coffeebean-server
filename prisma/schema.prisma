@@ -4,10 +4,31 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model CoffeeBean {
+  id        Int @id @default(autoincrement())
+  name      String
+  origin    String
+  roast     String?
+  createdAt DateTime @default(now())
+  recipes   Recipe[]
+}
+
+model Recipe {
+  id         Int      @id @default(autoincrement())
+  title      String
+  method     String
+  grindSize  String?
+  ratio      String?
+  notes      String?
+
+  coffeeId   Int
+  coffee     CoffeeBean @relation(fields: [coffeeId], references: [id])
 }
