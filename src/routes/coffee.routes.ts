@@ -28,6 +28,20 @@ router.get("/:id", async(req,res) =>{
     }
 })
 
+//not tested
+router.get("/:id", async (req, res) => {
+  const id = Number(req.params.id);
+
+  const coffee = await prisma.coffeeBean.findUnique({
+    where: { id },
+    include: {
+      recipes: true
+    }
+  });
+
+  res.json(coffee);
+});
+
 router.post("/", async(req, res)=>{
     try {
         const {name, origin, roast} =req.body
