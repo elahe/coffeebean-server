@@ -18,9 +18,9 @@ router.get("/", async(req,res)=>{
 
 router.get("/:id", async(req,res)=>{
     try {
-        const id = Number(req.params.id)
+        const coffeeId = Number(req.params.id)
         const recipes = await prisma.recipe.findMany({
-            where:{id}
+            where:{coffeeId}
         })
         res.json(recipes);
     } catch (error) {
